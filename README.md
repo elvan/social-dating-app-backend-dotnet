@@ -1,1 +1,1 @@
-# social-dating-app-backend-dotnet
+# SocialDatingApp
