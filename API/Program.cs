@@ -33,7 +33,7 @@ if (app.Environment.IsDevelopment())
 
 app.UseCors(builder =>
 {
-    _ = builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:4200");
+    _ = builder.AllowAnyHeader().AllowAnyMethod().WithOrigins("https://localhost:4200");
 });
 
 app.UseHttpsRedirection();
