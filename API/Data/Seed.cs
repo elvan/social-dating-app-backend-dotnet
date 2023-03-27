@@ -22,7 +22,7 @@ public class Seed
 
         var userData = await File.ReadAllTextAsync("Data/UserSeedData.json");
 
-        _ = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
         var users = JsonSerializer.Deserialize<List<AppUser>>(userData);
 
@@ -34,9 +34,9 @@ public class Seed
             user.PasswordHash = hmac.ComputeHash(Encoding.UTF8.GetBytes("Pa$$w0rd"));
             user.PasswordSalt = hmac.Key;
 
-            _ = context.Users.Add(user);
+            context.Users.Add(user);
         }
 
-        _ = await context.SaveChangesAsync();
+        await context.SaveChangesAsync();
     }
 }
