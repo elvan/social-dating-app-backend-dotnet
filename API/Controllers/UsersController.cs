@@ -4,8 +4,6 @@ using System.Threading.Tasks;
 using API.DTOs;
 using API.Interfaces;
 
-using AutoMapper;
-
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -16,11 +14,8 @@ public class UsersController : BaseApiController
 {
     private readonly IUserRepository _userRepository;
 
-    private readonly IMapper _mapper;
-
-    public UsersController(IUserRepository userRepository, IMapper mapper)
+    public UsersController(IUserRepository userRepository)
     {
-        _mapper = mapper;
         _userRepository = userRepository;
     }
 
