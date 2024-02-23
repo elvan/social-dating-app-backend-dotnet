@@ -484,10 +484,16 @@ $RECYCLE.BIN/
 *.swp
 
 ###
-API/appsettings.json
-API/appsettings.Development.json
+
+.vscode
 
 ###
+
+API/appsettings.Development.json
+API/appsettings.json
+
+###
+
 social_dating_app.db
 social_dating_app.db-journal
 social_dating_app.db-shm
