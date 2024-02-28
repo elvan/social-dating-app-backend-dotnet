@@ -9,6 +9,12 @@ namespace API.Data;
 
 public class Seed
 {
+    public static async Task ClearConnections(DataContext context)
+    {
+        context.Connections.RemoveRange(context.Connections);
+        await context.SaveChangesAsync();
+    }
+
     public static async Task SeedUsers(UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
     {
         if (await userManager.Users.AnyAsync()) return;
@@ -20,11 +26,11 @@ public class Seed
         var users = JsonSerializer.Deserialize<List<AppUser>>(userData, options);
 
         var roles = new List<AppRole>
-        {
-            new AppRole{Name = "Member"},
-            new AppRole{Name = "Admin"},
-            new AppRole{Name = "Moderator"},
-        };
+            {
+                new AppRole{Name = "Member"},
+                new AppRole{Name = "Admin"},
+                new AppRole{Name = "Moderator"},
+            };
 
         foreach (var role in roles)
         {
@@ -34,7 +40,8 @@ public class Seed
         foreach (var user in users)
         {
             user.UserName = user.UserName.ToLower();
-
+            user.Created = DateTime.SpecifyKind(user.Created, DateTimeKind.Utc);
+            user.LastActive = DateTime.SpecifyKind(user.Created, DateTimeKind.Utc);
             await userManager.CreateAsync(user, "Pa$$w0rd");
             await userManager.AddToRoleAsync(user, "Member");
         }
