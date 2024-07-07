@@ -7,5 +7,6 @@
   },
   "ConnectionStrings": {
     "DefaultConnection": "Data source=social_dating.db"
-  }
+  },
+  "TokenKey": "super secret key"
 }
