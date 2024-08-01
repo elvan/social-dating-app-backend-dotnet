@@ -6,6 +6,11 @@
     }
   },
   "AllowedHosts": "*",
+  "CloudinarySettings": {
+    "CloudName": "",
+    "ApiKey": "",
+    "ApiSecret": ""
+  },
   "ConnectionStrings": {
     "DefaultConnection": "Data source=social_dating.db"
   },
