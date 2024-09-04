@@ -12,12 +12,16 @@ namespace API.Data;
 
 public class UserRepository(DataContext context, IMapper mapper) : IUserRepository
 {
-    public async Task<MemberDto?> GetMemberAsync(string username)
+    public async Task<MemberDto?> GetMemberAsync(string username, bool isCurrentUser)
     {
-        return await context.Users
+        var query = context.Users
             .Where(x => x.UserName == username)
             .ProjectTo<MemberDto>(mapper.ConfigurationProvider)
-            .SingleOrDefaultAsync();
+            .AsQueryable();
+
+        if (isCurrentUser) query = query.IgnoreQueryFilters();
+
+        return await query.FirstOrDefaultAsync();
     }
 
     public async Task<PagedList<MemberDto>> GetMembersAsync(UserParams userParams)
@@ -52,6 +56,15 @@ public class UserRepository(DataContext context, IMapper mapper) : IUserReposito
         return await context.Users.FindAsync(id);
     }
 
+    public async Task<AppUser?> GetUserByPhotoId(int photoId)
+    {
+        return await context.Users
+            .Include(p => p.Photos)
+            .IgnoreQueryFilters()
+            .Where(p => p.Photos.Any(p => p.Id == photoId))
+            .FirstOrDefaultAsync();
+    }
+
     public async Task<AppUser?> GetUserByUsernameAsync(string username)
     {
         return await context.Users
@@ -64,11 +77,6 @@ public class UserRepository(DataContext context, IMapper mapper) : IUserReposito
         return await context.Users
             .Include(x => x.Photos)
             .ToListAsync();
-    }
-
-    public async Task<bool> SaveAllAsync()
-    {
-        return await context.SaveChangesAsync() > 0;
     }
 
     public void Update(AppUser user)
