@@ -12,7 +12,7 @@
     "ApiSecret": ""
   },
   "ConnectionStrings": {
-    "DefaultConnection": "Data source=social_dating.db"
+    "DefaultConnection": ""Data source=/app/social_dating.db""
   },
   "TokenKey": "super secret key"
 }
